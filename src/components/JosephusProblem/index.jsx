@@ -5,26 +5,30 @@ const JosephusProblem = () => {
     const [initialData, setInitialData] = useState({ disabled: false, eliminationIndex: 0, guessedPosition: 0, peopleCount: 0 });
     const [status, setStatus] = useState('start');
     const handleStart = () => {
-        setInitialData({ ...initialData, disabled: true })
-        const peopleItems = new Array(initialData.peopleCount).map((_, index) => {
-            return ({
+        setInitialData({ ...initialData, disabled: true });
+        const peopleItems = new Array(initialData.peopleCount).fill().map((_, index) => {
+            return {
                 id: index + 1,
                 isDead: false,
-            })
-        })
-        const upperhalf = peopleItems.filter((item) => item?.id >= initialData.eliminationIndex);
-        const lowerHalf = peopleItems.filter((item) => item?.id < initialData.eliminationIndex);
-        const sortedPeople = upperhalf.concat(lowerHalf);
-        setStatus(initialData.guessedPosition === kill(sortedPeople) ? 'winner' : 'loser');
+            };
+        });
+        let eliminationIndex = initialData.eliminationIndex;
+        if (eliminationIndex > 1) {
+            eliminationIndex -= 1;
+            const eliminatedPeople = peopleItems.splice(0, eliminationIndex - 1);
+            peopleItems.push(...eliminatedPeople);
+        }
+        setStatus(kill(peopleItems) === initialData.guessedPosition ? "winner" : "loser");
     };
     const kill = (people) => {
         if (people.length === 1) {
             return people[0]?.id;
         } else {
-            for (let index = 0; index < people.length; index++) {
-
-                if (people[index] && index % 2 !== 0) {
-                    people[index].isDead = true;
+            const startIndex = initialData.eliminationIndex - 1;
+            for (let index = startIndex; index < people.length + startIndex; index++) {
+                const adjustedIndex = index % people.length;
+                if (people[adjustedIndex] && (index - startIndex) % 2 !== 0) {
+                    people[adjustedIndex].isDead = true;
                 }
             }
             const survivedPeople = people.filter((item) => item?.isDead === false);
