@@ -2,82 +2,85 @@ import React, { useState } from "react";
 import "./RiverCrossing.css";
 
 function RiverCrossing() {
-  const [leftBank, setLeftBank] = useState(["normal1", "normal2", "normal3", "zombie1", "zombie2", "zombie3"]);
-  const [rightBank, setRightBank] = useState([]);
-  const [boat, setBoat] = useState([]);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [boatSide, setBoatSide] = useState('right');
+  const [leftSide, setLeftSide] = useState([]);
+  const [rightSide, setRightSide] = useState([
+    { id: 1, isHuman: true }, { id: 2, isHuman: true },
+    { id: 3, isHuman: true }, { id: 4, isHuman: false },
+    { id: 5, isHuman: false }, { id: 6, isHuman: false }
+  ]);
+  const [inBoat, setInBoat] = useState([]);
 
-  const handleMove = (person) => {
-    if (boat.length < 2) {
-      // Check if person is on left or right bank
-      if (leftBank.includes(person)) {
-        setLeftBank(leftBank.filter((p) => p !== person));
-        setBoat([...boat, person]);
-      } else if (rightBank.includes(person)) {
-        setRightBank(rightBank.filter((p) => p !== person));
-        setBoat([...boat, person]);
-      }
+  const gameCondition = () => {
+    const humanLength = rightSide.filter((person) => person.isHuman === true).length;
+    const zombieLength = rightSide.filter((person) => person.isHuman === false).length;
+    return zombieLength > humanLength;
+  }
+
+  const handleDropOff = () => {
+    setIsGameOver(gameCondition())
+  }
+  const handleInsertInBoat = (person) => {
+    const people = boatSide === 'left' ? leftSide : rightSide;
+    const personIndex = people.findIndex((item) => item.id === person.id);
+    if (personIndex !== -1 && inBoat.length < 2) {
+      if (boatSide === 'left') leftSide.splice(personIndex, 1);
+      else rightSide.splice(personIndex, 1);
+      setInBoat([...inBoat, person]);
     }
-  };
-
-  const handleCross = () => {
-    if (boat.length > 0 && boat.length <= 2) {
-      if (boat.some((person) => person.startsWith("zombie"))) {
-        // Count persons on left and right banks
-        const leftNormal = leftBank.filter((person) => person.startsWith("normal")).length;
-        const leftZombie = leftBank.filter((person) => person.startsWith("zombie")).length;
-        const rightNormal = rightBank.filter((person) => person.startsWith("normal")).length;
-        const rightZombie = rightBank.filter((person) => person.startsWith("zombie")).length;
-
-        // Game over if count of zombies is greater than normal persons on either side
-        if ((leftNormal > 0 && leftZombie > leftNormal) || (rightNormal > 0 && rightZombie > rightNormal)) {
-          setIsGameOver(true);
-          return;
-        }
-      }
-
-      // Move people from boat to opposite bank
-      if (leftBank.length > rightBank.length) {
-        setRightBank([...rightBank, ...boat]);
-      } else {
-        setLeftBank([...leftBank, ...boat]);
-      }
-
-      // Clear boat state
-      setBoat([]);
+  }
+  const handleEmptyBoat = () => {
+    const peopleInBoat = inBoat;
+    if (boatSide === 'left') {
+      setLeftSide(leftSide.concat(peopleInBoat));
+    } else {
+      setRightSide(rightSide.concat(peopleInBoat));
     }
-  };
-
+    setInBoat([]);
+  }
+  const handleCrossBoat = () => {
+    if (boatSide === 'left') setBoatSide('right');
+    else setBoatSide('left');
+    alert('by clicking on people buttons you will drop them off');
+  }
+  console.log({ boatSide, inBoat, leftSide, rightSide, isGameOver });
   return (
     <div className="river-crossing-puzzle">
       <h1>River Crossing Puzzle</h1>
       <div className="banks-container">
         <div className="bank">
-          <h2>Left Bank:</h2>
-          {leftBank.map((person) => (
-            <button key={person} onClick={() => handleMove(person)}>
-              {person}
+          <h2>Left Side:</h2>
+          {Boolean(leftSide.length) && leftSide?.map((person) => (
+            <button key={person?.id} disabled={inBoat.length === 2} onClick={() => handleInsertInBoat(person)}>
+              {person?.isHuman ? 'human' : 'zombie'}{person?.id}
             </button>
           ))}
         </div>
         <div className="bank">
-          <h2>Right Bank:</h2>
-          {rightBank.map((person) => (
-            <button key={person} onClick={() => handleMove(person)}>
-              {person}
+          <h2>Right Side:</h2>
+          {Boolean(rightSide.length) && rightSide?.map((person) => (
+            <button key={person?.id} disabled={inBoat.length === 2} onClick={() => handleInsertInBoat(person)}>
+              {person?.isHuman ? 'human' : 'zombie'}{person?.id}
             </button>
           ))}
         </div>
       </div>
+      {inBoat.length === 2 && 'boat is full either cross the boat or empty it'}
       <div className="boat-container">
         <h2>Boat:</h2>
-        {boat.map((person) => (
-          <button key={person} onClick={() => handleMove(person)}>
-            {person}
+        {inBoat.map((person) => (
+          <button key={person.id}
+            onClick={() => { handleDropOff(person) }}
+          >
+            {person?.isHuman ? 'human' : 'zombie'}{person?.id}
           </button>
         ))}
-        <button className="cross-button" onClick={handleCross}>
-          Cross
+        <button className="cross-button" onClick={handleCrossBoat}>
+          Cross The Boat
+        </button>
+        <button className="empty-button" onClick={handleEmptyBoat}>
+          Empty The Boat
         </button>
       </div>
       {isGameOver && <h3 className="game-over-message">Game Over!</h3>}
