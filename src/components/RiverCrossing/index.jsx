@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./RiverCrossing.css";
 
-function RiverCrossing() {
+const RiverCrossing = () => {
   const [isGameOver, setIsGameOver] = useState(false);
   const [boatSide, setBoatSide] = useState('right');
   const [leftSide, setLeftSide] = useState([]);

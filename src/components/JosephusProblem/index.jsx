@@ -15,7 +15,7 @@ const JosephusProblem = () => {
         const upperhalf = peopleItems.filter((item) => item?.id >= initialData.eliminationIndex);
         const lowerHalf = peopleItems.filter((item) => item?.id < initialData.eliminationIndex);
         const sortedPeople = upperhalf.concat(lowerHalf);
-        setStatus(initialData.guessedPosition == kill(sortedPeople) ? 'winner' : 'loser');
+        setStatus(initialData.guessedPosition === kill(sortedPeople) ? 'winner' : 'loser');
     };
     const kill = (people) => {
         if (people.length === 1) {
@@ -53,11 +53,11 @@ const JosephusProblem = () => {
                 }}>reset</button>
             </div>
             <div className="people-container">
-                {(Boolean(initialData.peopleCount) && status != "start") && new Array(initialData.peopleCount).fill().map((_, index) => (
-                    <div key={`person-${index + 1}`} className={`person ${index % 2 != 0 ? 'eliminated' : ''} ${index == initialData.guessedPosition - 1 ? 'guessed' : ''}`}>{index + 1}</div>
+                {(Boolean(initialData.peopleCount) && status !== "start") && new Array(initialData.peopleCount).fill().map((_, index) => (
+                    <div key={`person-${index + 1}`} className={`person ${index % 2 !== 0 ? 'eliminated' : ''} ${index === initialData.guessedPosition - 1 ? 'guessed' : ''}`}>{index + 1}</div>
                 ))}
             </div>
-            {status == "winner" ? <h3 className="win-message">Congratulations! You Win!</h3> : status == "loser" && <h3 className="lose-message">Sorry! You Lose!</h3>}
+            {status === "winner" ? <h3 className="win-message">Congratulations! You Win!</h3> : status === "loser" && <h3 className="lose-message">Sorry! You Lose!</h3>}
         </div>
     );
 }
