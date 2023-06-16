@@ -57,11 +57,11 @@
 
 
 	<script type="text/javascript">
-		var StatusPerson = new Array(0, 0, 0, 0, 0, 0, 0); // 0 is left bank, 1 is in the boat and 2 is right bank
-		var StatusBoat = 0; //0 is left, 1 is right
-		var BoatX = 0; //Current position of boat
-		var BoatX0 = 100; //Left position of boat
-		var BoatX1 = 600; //Right position of boat
+		var StatusPerson = new Array(0, 0, 0, 0, 0, 0, 0); 
+		var StatusBoat = 0;
+		var BoatX = 0;
+		var BoatX0 = 100;
+		var BoatX1 = 600;
 		var BoatY = -188;
 
 		var PersonNumber = 0;
@@ -77,7 +77,6 @@
 			$('.Person').click(function () {
 				var Temp = $(this).attr('id');
 				PersonNumber = Temp.replace('Person', '');
-
 				if ((Passengers < 2) && ((StatusPerson[PersonNumber] == 0 && StatusBoat == 0) || (StatusPerson[PersonNumber] == 2 && StatusBoat == 1))) { //Put person in boat
 					$(this).css({ 'z-index': 10 });
 					$(this).animate({
@@ -86,18 +85,13 @@
 					}, 1000);
 					Passengers += 1;
 					StatusPerson[PersonNumber] = 1;
-				}// End if ########################
-
+				}
 				else if (StatusPerson[PersonNumber] == 1) { TakePersonOutOfBoat(PersonNumber) };
-
-
 			});
-
 			$('#Boat').click(function () {
-
 				if (Passengers > 0 && Passengers != 99) {
 					if (StatusBoat == 0) { BoatX = BoatX1 } else { BoatX = BoatX0 };
-					$(this).animate({ left: BoatX + 'px' }, 1000);//Move boat ##########
+					$(this).animate({ left: BoatX + 'px' }, 1000);
 					StatusBoat = (StatusBoat + 1) % 2;
 					for (var i = 1; i <= 6; i++) {
 						if (StatusPerson[i] == 1) {
@@ -109,14 +103,10 @@
 					CheckTheNewSituation();
 				}
 			});
-
 			$('#Button1').click(function () {
 				init();
 			});
-
-
 		});
-
 		function init() {
 			$('#Feedback').html("<p>Click monsters or munchkins to put them in the boat then click the boat to cross the river</p>");
 			document.getElementById("Trophybutton").style.visibility = "hidden";
@@ -130,7 +120,6 @@
 				StatusPerson[i] = 0;
 			}
 		}
-
 		function TakePersonOutOfBoat(p) {
 			if (Passengers != 99) {
 				$('#Person' + p).animate({
@@ -145,21 +134,17 @@
 		function CheckTheNewSituation() {
 			var NumberOfMonsters = 0;
 			var NumberOfMunchkins = 0;
-			//Check left bank
 			for (var i = 1; i <= 3; i++) {
 				if (StatusPerson[i] == 0 || (StatusBoat == 0 && StatusPerson[i] == 1)) { NumberOfMonsters += 1 };
 				if (StatusPerson[i + 3] == 0 || (StatusBoat == 0 && StatusPerson[i + 3] == 1)) { NumberOfMunchkins += 1 };
 			}
-			//console.log("Left Monsters: " + NumberOfMonsters + " Munchkins " + NumberOfMunchkins);
 			if (NumberOfMonsters > NumberOfMunchkins && NumberOfMunchkins != 0) { Disaster() }
-			//Check right bank
 			var NumberOfMonsters = 0;
 			var NumberOfMunchkins = 0;
 			for (var i = 1; i <= 3; i++) {
 				if (StatusPerson[i] == 2 || (StatusBoat == 1 && StatusPerson[i] == 1)) { NumberOfMonsters += 1 };
 				if (StatusPerson[i + 3] == 2 || (StatusBoat == 1 && StatusPerson[i + 3] == 1)) { NumberOfMunchkins += 1 };
 			}
-			//console.log("Right Monsters: " + NumberOfMonsters + " Munchkins " + NumberOfMunchkins);
 			if (NumberOfMonsters > NumberOfMunchkins && NumberOfMunchkins != 0) { Disaster() }
 		}
 		function CheckToSeeIfFinished() {

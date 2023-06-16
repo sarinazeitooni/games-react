@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<title>game</title>
+	<style type="text/css">
+		div#FooterNew2012 {
+			width: 100%;
+			height: 300px;
+			background-color: #333333;
+			border: 3px black solid;
+			margin-top: 20px;
+			margin-left: -5px;
+			background-image: url('/Software/SW/Starter_of_the_day/Images/Backgrounds/FooterNew2012.gif');
+			margin-right: 0px;
+			margin-bottom: 0px;
+		}
+
+		div.FooterNew2012_inc_UL {
+			padding: 0px;
+			position: absolute;
+			text-align: left;
+		}
+
+		div.FooterNew2012_inc_UL p {
+			font-family: Arial, Helvetica, sans-serif;
+			color: aliceblue;
+			font-size: 14px;
+			font-weight: normal;
+			margin: 2px;
+		}
+
+		div.FooterNew2012_inc_UL a {
+			color: lightgrey;
+			font-size: 12px;
+			font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+			text-decoration: none;
+		}
+
+		div.FooterNew2012_inc_UL a:visited,
+		div.FooterNew2012_inc_UL a:active {
+			color: lightgrey;
+		}
+
+		div.FooterNew2012_inc_UL ul {
+			margin: 2px;
+		}
+
+		div.FooterNew2012_inc_UL li {
+			list-style: none;
+			line-height: 16px;
+		}
+
+		div.FooterNew2012_inc_UL input[type=text],
+		div.FooterNew2012_inc_UL input[type=submit] {
+			font-size: 12px;
+		}
+
+		div#FooterSearch {
+			position: absolute;
+			border: 0px red solid;
+			text-align: center;
+			width: 200px;
+			left: 510px;
+			top: 180px;
+			height: 20px;
+		}
+
+		#FooterSearch input {
+			font-size: 10px;
+			color: black;
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>River Crossing Challenge</h1>
+
+	<div id="MainContainer">
+		<div id="Feedback"></div>
+		<img alt="Monster" src="images/Monster.png" class="Person Monster" id="Person1">
+		<img alt="Monster" src="images/Monster.png" class="Person Monster" id="Person2">
+		<img alt="Monster" src="images/Monster.png" class="Person Monster" id="Person3">
+		<img alt="Munchkin" src="images/Munchkin.png" class="Person Munchkin" id="Person4">
+		<img alt="Munchkin" src="images/Munchkin.png" class="Person Munchkin" id="Person5">
+		<img alt="Munchkin" src="images/Munchkin.png" class="Person Munchkin" id="Person6">
+		<img alt="Boat" src="images/Boat.png" id="Boat">
+	</div>
+
+	<div id="UnderContainer">
+
+		<div id="LeftPanel">
+
+			<div class="Dontshowforprinting">
+				<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px"
+					data-ad-client="ca-pub-3448116359683998" data-ad-slot="0621298121"></ins>
+				<script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+			</div>
+
+		</div>
+
+		<div id="MiddlePanel">
+			<input name="Button1" id="Button1" type="button" value="Start Again" />
+			<form method="post" id="TrophyForm" name="TrophyForm" action="/Trophies/Apply_Trophy.asp">
+				<input type="hidden" value="274" name="id_item">
+				<input type="hidden" value="3" name="Level">
+				<input type="hidden" value="Completed" name="Other_Text">
+				<input type="button" id="Trophybutton" value="Claim Your Trophy For Level 3" name="Trophy"
+					onclick="ClaimTrophy(this.form)">
+			</form>
+			<p>Can you get all six creatures across the river safely?</p>
+			<p>A maximum of two creatures are allowed in the boat for each crossing. The munchkins must never be
+				outnumbered by the monsters. The boat will not move if there is no creature in it. Click on the
+				creatures and boat to move them.</p>
+		</div>
+	</div>
+	<script src="js/app.js"></script>
+</body>
+
+</html>
