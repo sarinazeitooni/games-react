@@ -36,6 +36,9 @@ g line {
     stroke-dashoffset: 5;
     animation: animationDelete 3s linear alternate;
 }
+.josephBtn {
+    color: white;
+}
 .line-delete ellipse {
     stroke: red;
 }
