@@ -9,8 +9,6 @@ var inputControl = false;
             for (let i = 1; i <= l; i++){
                 people.push(i);
             }
-
-            /*People Add Place - Start*/
             const addPeople = async (callback) => {
                 var yazdir = 1;
                 for(let peopleSvg = 1; peopleSvg < 360; peopleSvg +=homosapiensSpace){
@@ -26,17 +24,13 @@ var inputControl = false;
                 }
                 callback();
             }
-            /*People Add Place - Finish*/
             
             while (people.length !== 1) {
                 for (let i = 1; i < d; i++) {
                     people.push(people.shift());
-                    /* console.log(people) */
                     $('#ekle g:nth-child('+i+') text[text-anchor]').text(i)
                 }
                 deathPeople.push(people.shift());
-                /* console.log(deathPeople) */
-                
             }
             
             var time = 3000;
@@ -62,22 +56,17 @@ var inputControl = false;
             }
 
             removePeople(wonPerson);
-            
-
-            /* console.log("Death order is " + deathPeople.join(" ")); */
-            return people[0]; //survivor
+            return people[0];
         }
         $('.josephBtn').click(function(){
             $('#ekle').html('')    
             var inputControl = $('#inputJoseph').val();
-            /* console.log("Hayatta kalan = " + josephProblemJs(inputControl, 2)) */
             josephProblemJs(inputControl, 2, inputControl)
         })
         $('#peopleRange').click(function(){
             $('#peopleRange').attr('disabled', 'disabled');
             $('#ekle').html('');
             var rangeVal = $(this).val();
-
             josephProblemJs(rangeVal, 2, rangeVal)
             console.log(inputControl)
             if(inputControl == true){
