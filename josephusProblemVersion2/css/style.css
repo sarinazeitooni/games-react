@@ -1,0 +1,18 @@
+.players{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align:middle;
+    font-weight: 800;
+    font-size: 28px;
+    transition: all 0.6s;
+}
+
+.dead{
+    border: 8px solid red;
+}
+
+.alive{
+    border: 8px solid green;
+}
